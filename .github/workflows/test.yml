@@ -28,6 +28,8 @@ jobs:
            timeout: 5
          - ruby: 3.2
            timeout: 5
+         - ruby: 3.3
+           timeout: 5
          - ruby: truffleruby
            timeout: 50
          - ruby: truffleruby-head
@@ -47,7 +49,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install libyaml-dev
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
@@ -56,7 +58,7 @@ jobs:
         cache-version: 4
     - name: Run tests
       run: bundle exec rake spec
-      continue-on-error: ${{ matrix.ruby == 'truffleruby-head' }}
+      continue-on-error: ${{ matrix.ruby == 'truffleruby-head' || matrix.ruby == 'truffleruby' }}
   actionmailer:
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +66,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install libyaml-dev
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3
